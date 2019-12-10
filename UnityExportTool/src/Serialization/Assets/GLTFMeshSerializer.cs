@@ -117,9 +117,16 @@ namespace Egret3DExportTools
 
                 if (skin.rootBone != null)
                 {
+                    var rootBoneIndex = allBones.IndexOf(skin.rootBone);
+
+                    if (rootBoneIndex < 0)
+                    {
+                        Debug.LogError("没找到 RootBone 请检查是否模型的层级不太对 [目前的逻辑需要 MeshRenderer 与 RootBone 平级]");
+                    }
+
                     gltfSKIN.Skeleton = new NodeId
                     {
-                        Id = allBones.IndexOf(skin.rootBone),
+                        Id = rootBoneIndex,
                         Root = _root
                     };
                 }
